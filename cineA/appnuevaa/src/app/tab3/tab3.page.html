@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Lista de Peliculas 
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Lista de Peliculas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item>
+
+      <ion-label><b>Id</b> </ion-label>
+      <ion-label>Sinopsis</ion-label>
+      <ion-label>Duracion Minutos</ion-label>
+      <ion-label>Id Genero</ion-label>
+      <ion-label>Id Clasificacion</ion-label>
+      <ion-label>Imagen Promocional</ion-label>
+  
+    </ion-item>
+    @for(pelicula of peliculas; track pelicula.idpelicula){
+    <ion-item>
+
+      <ion-label>{{pelicula.idpelicula}}</ion-label>
+      <ion-label>{{pelicula.sinopsis}}</ion-label>
+      <ion-label>{{pelicula.duracionMinutos}}</ion-label>
+      <ion-label>{{pelicula.idgenero}}</ion-label>
+      <ion-label>{{pelicula.idclasificacion}}</ion-label>
+      <ion-label>
+        @if(pelicula.imagenPromocional){
+          <img
+            [src]="pelicula.imagenPromocional"
+            width="100"
+            alt="Imagen promocional de la película">
+        }
+      </ion-label>
+    </ion-item>
+    }
+ 
+  </ion-list>
+
+</ion-content>

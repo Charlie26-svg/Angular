@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Lista de usuarios
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Lista de usuarios</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item>
+
+      <ion-label><b>Id</b> </ion-label>
+      <ion-label>Nombres</ion-label>
+      <ion-label>Apellidos</ion-label>
+      <ion-label>Correo</ion-label>
+      <ion-label>Telefono</ion-label>
+      <ion-label>NombreUsuario</ion-label>
+      <ion-label>Contrasena</ion-label>
+      <ion-label>Id Rol</ion-label>
+      <ion-label>Fotografia</ion-label>
+    </ion-item>
+    @for(usuario of usuarios; track usuario.idusuario){
+    <ion-item>
+
+      <ion-label>{{usuario.idusuario}}</ion-label>
+      <ion-label>{{usuario.nombres}}</ion-label>
+      <ion-label>{{usuario.apellidos}}</ion-label>
+      <ion-label>{{usuario.correo}}</ion-label>
+      <ion-label>{{usuario.telefono}}</ion-label>
+      <ion-label>{{usuario.nombreUsuario}}</ion-label>
+      <ion-label>{{usuario.contrasena}}</ion-label>
+      <ion-label>{{usuario.idRol}}</ion-label>
+      <ion-label>{{usuario.fotografia}}</ion-label>
+    </ion-item>
+    }
+  </ion-list>
+
+</ion-content>

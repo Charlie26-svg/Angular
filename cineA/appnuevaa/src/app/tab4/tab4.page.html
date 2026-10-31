@@ -1,0 +1,276 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Reservas de Cine</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <h2>Selecciona una Pelicula</h2>
+
+  <ion-list>
+
+    @for(pelicula of peliculas; track pelicula.idpelicula) {
+
+      <ion-item>
+        <ion-label>
+
+          <h2>{{pelicula.titulo}}</h2>
+          <p>{{pelicula.sinopsis}}</p>
+
+          @if(pelicula.imagenPromocional) {
+            <img
+              [src]="pelicula.imagenPromocional"
+              width="120"
+              alt="Imagen de la pelicula">
+          }
+
+          <ion-button
+            (click)="seleccionarPelicula(pelicula.idpelicula)">
+            Seleccionar Pelicula
+          </ion-button>
+
+        </ion-label>
+      </ion-item>
+
+    }
+
+  </ion-list>
+
+
+  @if(idPelicula > 0) {
+
+    <h2>Funciones Disponibles</h2>
+
+    <ion-list>
+
+      @for(funcion of funciones; track funcion.idfuncion) {
+
+        @if(funcion.idPelicula == idPelicula) {
+
+          <ion-item>
+
+            <ion-label>
+              Sala: {{funcion.idSala}}
+            </ion-label>
+
+            <ion-label>
+              Fecha: {{funcion.fecha}}
+            </ion-label>
+
+            <ion-label>
+              Hora: {{funcion.hora}}
+            </ion-label>
+
+            <ion-label>
+              Q{{funcion.precioEntrada}}
+            </ion-label>
+
+            <ion-button
+              (click)="seleccionarFuncion(funcion)">
+              Seleccionar Funcion
+            </ion-button>
+
+          </ion-item>
+
+        }
+
+      }
+
+    </ion-list>
+
+  }
+
+
+  @if(idFuncion > 0) {
+
+    <h2>Funcion Seleccionada</h2>
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Sala: {{idSala}}</ion-label>
+        <ion-label>Precio: Q{{precioEntrada}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Cantidad de Entradas:</ion-label>
+
+        <input
+          type="number"
+          min="1"
+          step="1"
+          [(ngModel)]="cantidadEntradas"
+          (ngModelChange)="calcularTotal()"
+          style="width:80px; padding:8px;">
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          Total a Pagar: Q{{totalAPagar}}
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-button expand="block"
+      (click)="buscarAsientos()"
+      [disabled]="!cantidadEntradas || cantidadEntradas < 1 || cantidadEntradas % 1 !== 0">
+      Seleccionar Asientos
+    </ion-button>
+
+    @if(asientos.length > 0) {
+
+      <h2>Asientos Disponibles</h2>
+
+      <ion-list>
+
+        @for(asiento of asientos; track asiento.idasiento) {
+
+          <ion-item>
+
+            <ion-label>
+              Fila: {{asiento.fila}}
+            </ion-label>
+
+            <ion-label>
+              Asiento: {{asiento.numero}}
+            </ion-label>
+
+            <ion-button
+              (click)="seleccionarAsiento(asiento)">
+
+              @if(asientosSeleccionados.includes(asiento)) {
+                Quitar
+              } @else {
+                Seleccionar
+              }
+
+            </ion-button>
+
+          </ion-item>
+
+        }
+
+      </ion-list>
+
+    }
+
+    @if(asientosSeleccionados.length > 0) {
+
+      <h2>Asientos Seleccionados</h2>
+
+      <ion-list>
+
+        @for(asiento of asientosSeleccionados; track asiento.idasiento) {
+
+          <ion-item>
+            <ion-label>
+              Fila {{asiento.fila}} - Asiento {{asiento.numero}}
+            </ion-label>
+          </ion-item>
+
+        }
+
+      </ion-list>
+
+      <ion-item>
+        <ion-label>
+          Seleccionados:
+          {{asientosSeleccionados.length}} / {{cantidadEntradas}}
+        </ion-label>
+      </ion-item>
+
+    }
+
+    
+@if(asientosSeleccionados.length == cantidadEntradas &&
+    cantidadEntradas > 0) {
+
+  <ion-item>
+    <ion-label>ID Cliente:</ion-label>
+
+    <input type="number"
+      [(ngModel)]="idCliente"
+      style="width:100px; padding:8px;">
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Total a Pagar: Q{{totalAPagar}}
+    </ion-label>
+  </ion-item>
+
+  <ion-button expand="block"
+    (click)="guardarReserva()"
+    [disabled]="idCliente <= 0">
+    Guardar Reserva
+  </ion-button>
+
+}
+
+
+  }
+  
+<h2>Consulta de Reservas</h2>
+
+<ion-list>
+
+  <ion-item>
+    <ion-label><b>ID</b></ion-label>
+    <ion-label><b>Película</b></ion-label>
+    <ion-label><b>Cliente</b></ion-label>
+    <ion-label><b>Entradas</b></ion-label>
+    <ion-label><b>Total</b></ion-label>
+  </ion-item>
+
+  @for(reserva of reservas; track reserva.idreserva) {
+
+    <ion-item>
+
+      <ion-label>
+        {{reserva.idreserva}}
+      </ion-label>
+
+      <ion-label>
+
+        @if(buscarPeliculaReserva(reserva.idFuncion); as pelicula) {
+
+          <p>{{pelicula.titulo}}</p>
+
+          @if(pelicula.imagenPromocional) {
+            <img [src]="pelicula.imagenPromocional"
+                 width="70">
+          }
+
+        }
+
+      </ion-label>
+
+      <ion-label>
+        {{reserva.idCliente}}
+      </ion-label>
+
+      <ion-label>
+        {{reserva.cantidadEntradas}}
+      </ion-label>
+
+      <ion-label>
+        Q{{reserva.totalAPagar}}
+      </ion-label>
+
+    </ion-item>
+
+  } @empty {
+
+    <ion-item>
+      <ion-label>No hay reservas registradas</ion-label>
+    </ion-item>
+
+  }
+
+</ion-list>
+
+
+</ion-content>

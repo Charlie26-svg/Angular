@@ -5,8 +5,9 @@ import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 
+
 @Component({
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule,],
   selector: 'app-bienvenida',
   styleUrl: './bienvenida.css',
   templateUrl: './bienvenida.html',
@@ -15,129 +16,55 @@ import {HttpClient} from '@angular/common/http';
 export class Bienvenida {
   
 private readonly http: HttpClient;
-formulario: FormGroup;
-  usuarios: any =[];  
 
-  formularioAnuncio: FormGroup;
-  anuncios: any = []; 
+  formularioExamen: FormGroup;
+  examenes: any = [];
 
   constructor(http: HttpClient, private fb: FormBuilder){
     
     this.http = http;
-    this.formularioAnuncio = this.fb.group({
-      titulo:['', Validators.required],
-      descripcion:['',Validators.required],
-      imagen:['']
 
-    });
+    this.formularioExamen = this.fb.group({
+      nota:['', Validators.required],
+      carne:['', Validators.required]
+
+    })
 
 
-    this.formulario = this.fb.group(
-      {
-      correo: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      nombres: ['', Validators.required],
-      apellidos: ['', Validators.required],
-      telefono:['', Validators.required],
-      userName:['',Validators.required],
-      idRol:['', Validators.required],
-      Fotografia:['']
-    }
-  );
-    this.buscarUsuarios();
-    this.buscarAnuncios();
+    
+    this.buscarExamenes();
 
 }
-buscarUsuarios(){
-  this.http.get("http://localhost:8080/usuario/buscar"
-    ).subscribe(
-    data => this.usuarios=data
-    )
-}
- guardar(){
-    if(this.formulario.valid){
-      let temp = {... this.formulario.value};
-      temp.fechacreacion = new Date();
-      this.http.post("http://localhost:8080/usuario/guardar"
-        ,temp).subscribe(
-    user => this.mostrar(user)
-   ) }
-   else{
-    alert("Completar los campos");
-   }
-  }
-  mostrar(user:any){
 
-if (user?.idusuario){
-  alert("Usuario creado existosamente con ID:"+ user.idusuario);
-
-  this.buscarUsuarios();
-} else{
-  alert("Error al conectarse con el servidor");
-}
-
-
-  }
-buscarAnuncios(){
-  this.http.get("http://localhost:8080/anuncio/buscar")
-  .subscribe(
-    data => this.anuncios = data
+buscarExamenes(){
+  this.http.get("http://localhost:8080/examen/buscar" 
+  ).subscribe(
+    data => this.examenes=data
   )
 }
+ guardarExamen(){
+  if(this.formularioExamen.valid){
+    let temp = {... this.formularioExamen.value};
+    temp.fechaexamen = new Date();
+          this.http.post("http://localhost:8080/examen/guardar"
+                    ,temp).subscribe(
+          examen => this.mostrarExamen(examen)
 
-cargarImagen(event:any){
-
-  let archivo = event.target.files[0];
-
-  if(archivo){
-
-    let reader = new FileReader();
-
-    reader.onload = () => {
-
-      this.formularioAnuncio.patchValue({
-        imagen: reader.result
-      });
-
-    };
-
-    reader.readAsDataURL(archivo);
-
-  }
-
-}
-
-guardarAnuncio(){
-  if(this.formularioAnuncio.valid){
-      let temp = {... this.formularioAnuncio.value};
-let fecha = new Date();
-
-temp.fechaPublicacion =
-  fecha.getFullYear() + "-" +
-  String(fecha.getMonth() + 1).padStart(2, "0") + "-" +
-  String(fecha.getDate()).padStart(2, "0");
-console.log(temp);
-
-        this.http.post("http://localhost:8080/anuncio/guardar"
-        ,temp).subscribe(
-    anuncio => this.mostrarAnuncio(anuncio)
-   ) }
-   else{
+                     )} else{
     alert("Completar los campos");
    }
   }
-  mostrarAnuncio(anuncio:any){
+  mostrarExamen(examen:any){
 
-if (anuncio?.idanuncio){
-  alert("Anuncio creado existosamente con ID:"+ anuncio.idanuncio);
+if (examen?.idexamen){
+  alert("Examen creado existosamente:"+ examen.idexamen);
 
-  this.buscarAnuncios();
+  this.buscarExamenes();
 } else{
   alert("Error al conectarse con el servidor");
 }
-
   }
+ 
+
+
 }
-
-
-

@@ -1,0 +1,24 @@
+
+<h2>Consulta de Telefonos:</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Telefono</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for(telefono of telefonos; track telefono.idtelefono) {
+            <tr>
+                <td>{{ telefono.idtelefono }}</td>
+                <td>{{ telefono.telefono }}</td>
+            </tr>
+        } @empty {
+            <tr>
+                <td colspan="2">No hay telefonos registrados.</td>
+            </tr>
+        }
+    </tbody>
+</table>

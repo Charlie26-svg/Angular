@@ -1,0 +1,122 @@
+
+<h2>Crear película nueva:</h2>
+
+<form [formGroup]="formulario" (ngSubmit)="guardar()">
+
+    <label>Título:</label>
+    <input type="text" class="form-control"
+           formControlName="titulo">
+
+    @if (formulario.get('titulo')?.invalid &&
+         formulario.get('titulo')?.touched) {
+        <div class="text-danger">El título es obligatorio</div>
+    }
+
+    <br>
+
+    <label>Sinopsis:</label>
+    <textarea class="form-control"
+              formControlName="sinopsis"></textarea>
+
+    @if (formulario.get('sinopsis')?.invalid &&
+         formulario.get('sinopsis')?.touched) {
+        <div class="text-danger">La sinopsis es obligatoria</div>
+    }
+
+    <br>
+
+    <label>Duración en minutos:</label>
+    <input type="number" class="form-control"
+           formControlName="duracionMinutos" min="1">
+
+    <br>
+
+    <label>ID Género:</label>
+    <input type="number" class="form-control"
+           formControlName="idGenero">
+
+    <br>
+
+    <label>ID Clasificación:</label>
+    <input type="text" class="form-control"
+           formControlName="idClasificacion">
+
+    <br>
+
+    <label>Imagen promocional:</label>
+    <input type="file" class="form-control"
+           accept="image/*"
+           (change)="cargarImagen($event)">
+
+    <br>
+
+    @if (formulario.get('imagenPromocional')?.value) {
+        <img
+          [src]="formulario.get('imagenPromocional')?.value"
+          width="150"
+          alt="Vista previa de película">
+    }
+
+    <br><br>
+
+    <button type="submit" class="btn btn-success">
+        Guardar película
+    </button>
+
+</form>
+
+<hr>
+
+<h2>Consulta de películas:</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Sinopsis</th>
+            <th>Duración</th>
+            <th>Género</th>
+            <th>Clasificación</th>
+            <th>Imagen promocional</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (pelicula of peliculas; track pelicula.idpelicula) {
+            <tr>
+                <td>{{ pelicula.idpelicula }}</td>
+                <td>{{ pelicula.titulo }}</td>
+                <td>{{ pelicula.sinopsis }}</td>
+                <td>{{ pelicula.duracionMinutos }}</td>
+                <td>{{ pelicula.idGenero }}</td>
+                <td>{{ pelicula.idClasificacion }}</td>
+                <td>
+                   <label>Imagen promocional:</label>
+
+                    <input
+                    type="file"
+                    class="form-control"
+                    accept="image/png,image/jpeg"
+                    (change)="cargarImagen($event)">
+
+            <br>
+
+            @if (formulario.get('imagenPromocional')?.value) {
+            <img
+            [src]="formulario.get('imagenPromocional')?.value"
+            width="150"
+            alt="Vista previa"
+  >
+}
+ }
+            
+         @empty {
+            <tr>
+                <td colspan="7">
+                    No hay películas registradas.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

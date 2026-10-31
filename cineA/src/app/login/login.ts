@@ -34,6 +34,7 @@ this.http.post("http://localhost:8080/usuario/login", this.formulario.value).sub
 validar(usuario: any) {
   if(usuario?.idusuario) {
     location.href = "/bienvenida";
+    localStorage.setItem("usuario", JSON.stringify(usuario));
 }
 else {
   alert("Usuario o password incorrectos");

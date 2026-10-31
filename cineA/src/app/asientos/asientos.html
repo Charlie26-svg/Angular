@@ -1,0 +1,40 @@
+
+<h2>Consulta de asientos:</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Fila</th>
+            <th>Cantidad de asientos</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for(fila of filasAgrupadas; track fila.fila) {
+            <tr>
+                <td>Fila {{ fila.fila }}</td>
+                <td>{{ fila.cantidad }}</td>
+            </tr>
+        } @empty {
+            <tr>
+                <td colspan="2">No hay asientos registrados.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Total de asientos: {{ asientos.length }}</h3>
+<br><br>
+<h2>Agregar asientos</h2>
+
+<label>Fila:</label>
+<input type="text" [(ngModel)]="fila">
+
+<br><br>
+
+<label>Cantidad de asientos:</label>
+<input type="number" [(ngModel)]="cantidad">
+
+<br><br>
+
+<button (click)="guardarAsiento()">Agregar asientos</button>

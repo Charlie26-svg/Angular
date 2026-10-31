@@ -1,0 +1,51 @@
+<h2>Crear examen:</h2>
+
+<form [formGroup]="formularioExamen" (ngSubmit)="guardarExamen()">
+
+    <label>Nota:</label>
+    <input type="text" formControlName="nota">
+
+    @if (formularioExamen.get('nota')?.invalid &&
+         formularioExamen.get('nota')?.touched){
+        <div> La nota es Obligatoria</div>
+    }
+
+    <br><br>
+
+    <label>Carnet:</label>
+    <input type="text" formControlName="carne">
+
+    @if (formularioExamen.get('carne')?.invalid &&
+         formularioExamen.get('carne')?.touched){
+        <div>El carnet es obligatorio</div>
+    }
+    
+    <br><br>
+
+    <button type="submit">Guardar Examen</button>
+
+</form>
+
+<h2>Consulta de examenes:</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fecha examen</th>
+            <th>Nota</th>
+            <th>Carnet</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for(examen of examenes; track examen.idexamen){
+            <tr>
+                <td>{{examen.idexamen}}</td>
+                <td>{{examen.fechaExamen}}</td>
+                <td>{{examen.nota}}</td>
+                <td>{{examen.carne}}</td>
+            </tr>
+        }
+    </tbody>
+</table>    

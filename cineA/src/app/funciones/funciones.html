@@ -1,0 +1,139 @@
+
+<div class="container mt-3">
+
+    <h2>Crear función nueva:</h2>
+
+    <form [formGroup]="formulario" (ngSubmit)="guardar()">
+
+        <label>Película:</label>
+        <select class="form-select" formControlName="idPelicula">
+            <option value="">Seleccione una película</option>
+
+            @for(pelicula of peliculas; track pelicula.idpelicula) {
+                <option [value]="pelicula.idpelicula">
+                    {{pelicula.titulo}}
+                </option>
+            }
+        </select>
+
+        @if(formulario.get('idPelicula')?.invalid &&
+            formulario.get('idPelicula')?.touched) {
+            <div class="text-danger">
+                Debe seleccionar una película
+            </div>
+        }
+
+        <br>
+
+        <label>Sala:</label>
+        <select class="form-select" formControlName="idSala">
+            <option value="">Seleccione una sala</option>
+
+            @for(sala of salas; track sala.idsala ?? sala.idSala) {
+                <option [value]="sala.idsala ?? sala.idSala">
+                    {{sala.nombre}}
+                </option>
+            }
+        </select>
+
+        @if(formulario.get('idSala')?.invalid &&
+            formulario.get('idSala')?.touched) {
+            <div class="text-danger">
+                Debe seleccionar una sala
+            </div>
+        }
+
+        <br>
+
+        <label>Fecha:</label>
+        <input
+            type="date"
+            class="form-control"
+            formControlName="fecha">
+
+        @if(formulario.get('fecha')?.invalid &&
+            formulario.get('fecha')?.touched) {
+            <div class="text-danger">
+                La fecha es obligatoria
+            </div>
+        }
+
+        <br>
+
+        <label>Hora:</label>
+        <input
+            type="time"
+            class="form-control"
+            formControlName="hora">
+
+        @if(formulario.get('hora')?.invalid &&
+            formulario.get('hora')?.touched) {
+            <div class="text-danger">
+                La hora es obligatoria
+            </div>
+        }
+
+        <br>
+
+        <label>Precio de entrada (Q):</label>
+        <input
+            type="number"
+            class="form-control"
+            formControlName="precioEntrada"
+            min="1"
+            step="1">
+
+        @if(formulario.get('precioEntrada')?.invalid &&
+            formulario.get('precioEntrada')?.touched) {
+            <div class="text-danger">
+                Ingrese un precio válido
+            </div>
+        }
+
+        <br>
+
+        <button type="submit" class="btn btn-success">
+            Guardar función
+        </button>
+
+    </form>
+
+    <br><br>
+
+    <h2>Consulta de funciones:</h2>
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Película</th>
+                <th>Sala</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for(funcion of funciones; track funcion.idfuncion) {
+                <tr>
+                    <td>{{funcion.idfuncion}}</td>
+                    <td>{{obtenerNombrePelicula(funcion.idPelicula)}}</td>
+                    <td>{{obtenerNombreSala(funcion.idSala)}}</td>
+                    <td>{{funcion.fecha}}</td>
+                    <td>{{funcion.hora}}</td>
+                    <td>Q{{funcion.precioEntrada}}</td>
+                </tr>
+            } @empty {
+                <tr>
+                    <td colspan="6">
+                        No hay funciones registradas.
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>

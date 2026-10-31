@@ -1,0 +1,107 @@
+<h2> Crear usuario  nuevo: </h2>
+<form [formGroup]="formulario" (ngSubmit)="guardar()">
+    <label> Nombres: </label>
+    <input type="text" formControlName="nombres">
+    @if (formulario.get('nombres')?.invalid && formulario.get('nombres')?.touched){
+                <div> Los nombres son obligatorios</div>
+
+    }
+    <br><br>
+    <label> Apellidos: </label>
+    <input type="text" formControlName="apellidos">
+    @if (formulario.get('apellidos')?.invalid && formulario.get('apellidos')?.touched){
+                <div> Los apellidos son obligatorios</div>
+
+    }
+    <br><br>
+    <label> Correo: </label>
+    <input type="correo" formControlName="correo">
+    @if (formulario.get('correo')?.invalid && formulario.get('correo')?.touched){
+                <div> El correo es obligatorio</div>
+
+    }
+    <br><br>
+     <label> Password: </label>
+    <input type="password" formControlName="password">
+    @if (formulario.get('password')?.invalid && 
+    formulario.get('password')?.touched){
+            <div> El Password  es obligatorio</div>
+
+
+
+    }
+    <br><br>
+    <label> Telefono: </label>
+    <input type="text" formControlName="telefono">
+    @if (formulario.get('telefono')?.invalid && formulario.get('telefono')?.touched){
+                <div> El telefono es obligatorio</div>
+
+    }
+    <br><br>
+    <label> Nombre de usuario: </label>
+    <input type="text" formControlName="userName">
+    @if (formulario.get('userName')?.invalid && formulario.get('userName')?.touched){
+                <div> El nombre de usuario es obligatorio</div>
+
+    }
+    <br><br>
+<label> Rol: </label>
+
+<select formControlName="idRol">
+    <option value="">Seleccione un rol</option>
+    <option value="4">Administrador</option>
+    <option value="5">Gerente</option>
+    <option value="6">Cajero</option>
+</select>
+
+@if (formulario.get('idRol')?.invalid && formulario.get('idRol')?.touched){
+    <div> El rol es obligatorio</div>
+}
+<br><br>
+<label> Fotografia: </label>
+<input type="text" formControlName="Fotografia">
+
+    <br><br>
+        <button type="button" class="btn-solid theme-primary float-start">Ingresar</button>
+
+
+</form>
+
+<br><br>
+
+
+<h2> Consulta de usuarios:  </h2>
+<div class="container"></div>
+<table>
+     <thead>
+        <tr>
+            <th>Id </th>
+            <th>Nombres</th> 
+            <th>Apellidos </th>
+            <th>Correo </th>
+            <th>Password</th> 
+            <th>Telefono </th>
+            <th>Nombre de usuario </th>
+            <th>Rol</th>
+            <th>Fotografia</th>
+            <th>Acciones</th>  
+        </tr>
+     </thead>
+<tbody>
+    @for(usuario of usuarios; track usuario.idusuario){
+        <tr>
+            <td>{{usuario.idusuario}}</td>
+            <td>{{usuario.nombres}}</td>
+            <td>{{usuario.apellidos}}</td>
+            <td>{{usuario.correo}}</td>
+            <td>{{usuario.password}}</td>
+            <td>{{usuario.telefono}}</td>
+            <td>{{usuario.userName}}</td>
+            <td>{{usuario.idRol}}</td>
+            <td>{{usuario.Fotografia}}</td>
+            <td>
+                <button (click)="verTelefonos(usuario)">Ver Telefonos</button>
+                </tr>
+    }
+</tbody>
+</table>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         

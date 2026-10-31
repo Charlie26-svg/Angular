@@ -1,0 +1,62 @@
+<h2>Crear sala:</h2>
+
+<form [formGroup]="formulario" (ngSubmit)="guardarSala()">
+
+    <label>Nombre:</label>
+    <input type="text" formControlName="nombre">
+
+    @if (formulario.get('nombre')?.invalid &&
+         formulario.get('nombre')?.touched){
+        <div> El nombre es Obligatorio</div>
+    }    
+    <br><br>
+<label>Filas:</label>
+    <input type="text" formControlName="filas">
+
+    @if (formulario.get('filas')?.invalid &&
+         formulario.get('filas')?.touched){
+        <div> Las filas son Obligatorio</div>
+    }
+    <br><br>
+
+<label>Asientos por fila:</label>
+    <input type="text" formControlName="asientosPorFilas">
+
+    @if (formulario.get('asientosPorFilas')?.invalid &&
+         formulario.get('asientosPorFilas')?.touched){
+        <div> Los asientos por fila son Obligatorio</div>
+    }
+    
+    
+    <br><br>
+
+    <button type="submit">Guardar</button>
+
+</form>
+
+<h2>Consulta de Filas:</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Filas</th>
+            <th>Asientos por fila</th>
+        </tr>
+    </thead>
+    
+
+    <tbody>
+        @for(sala of salas; track sala.idsala){
+            <tr>
+                <td>{{sala.idsala}}</td>
+                <td>{{sala.nombre}}</td>
+                <td>{{sala.filas}}</td>
+                <td>{{sala.asientosPorFilas}}</td>
+                                <button (click)="verAsientos(sala)">Ver Asientos</button>
+
+            </tr>
+        }
+    </tbody>
+</table>

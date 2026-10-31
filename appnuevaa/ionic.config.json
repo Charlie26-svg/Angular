@@ -1,0 +1,7 @@
+{
+  "name": "appnuevaa",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

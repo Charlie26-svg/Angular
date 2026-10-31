@@ -1,0 +1,39 @@
+<h2>Crear clasificación:</h2>
+
+<form [formGroup]="formulario" (ngSubmit)="guardarClasificacion()">
+
+    <label>Nombre:</label>
+    <input type="text" formControlName="nombre">
+
+    @if (formulario.get('nombre')?.invalid &&
+         formulario.get('nombre')?.touched){
+        <div> El nombre es Obligatorio</div>
+    }
+    
+    <br><br>
+
+    <button type="submit">Guardar</button>
+
+</form>
+
+<h2>Consulta de clasificaciones:</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+        </tr>
+    </thead>
+    
+
+    <tbody>
+        @for(clasificacion of clasificaciones; track clasificacion.idclasificacion){
+            <tr>
+                <td>{{clasificacion.idclasificacion}}</td>
+                <td>{{clasificacion.nombre}}</td>
+            </tr>
+        }
+    </tbody>
+</table>    
+                
